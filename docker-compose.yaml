@@ -17,5 +17,4 @@ services:
     volumes:
       - ${DIR_CONFIG:?Please set your .env per the README}:/config
       - ${DIR_DL:?Please set your .env per the README}:/downloads
-      - ${DIR_LOG:?Please set your .env per the README}:/log
     restart: unless-stopped
