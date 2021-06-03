@@ -19,7 +19,7 @@ fi
 
 HATHCMD="s6-applyuidgid -u ${PUID} -g ${PGID} \
   /usr/bin/java -jar /hah/HentaiAtHome.jar \
-    --download-dir=/dl/ \
+    --download-dir=/dl/in_progress/ \
     --cache-dir=/config/cache/ \
     --data-dir=/config/data/ \
     --temp-dir=/config/tmp/ \

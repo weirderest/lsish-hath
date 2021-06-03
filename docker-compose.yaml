@@ -11,10 +11,10 @@ services:
     env_file:
       - ./.env
     expose:
-      - 6969
+      - ${HATH_PORT}
     ports:
-      - "${HATH_PORT:?Please set your .env per the README}:6969"
+      - "${HATH_PORT:?Please set your .env per the README}:${HATH_PORT}"
     volumes:
       - ${DIR_CONFIG:?Please set your .env per the README}:/config
-      - ${DIR_DL:?Please set your .env per the README}:/downloads
+      - ${DIR_DL:?Please set your .env per the README}:/dl
     restart: unless-stopped
