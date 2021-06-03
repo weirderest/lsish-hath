@@ -1,0 +1,8 @@
+#!/usr/bin/with-contenv bash
+
+# make some dirs and fix some perms
+mkdir -p \
+  /config/{cache,data,tmp,log}/ \
+  /dl/{complete,in_progress}/
+chown -R ${PUID}:${PGID} /config /dl /usr/local/bin
+chmod 755 /usr/local/bin/hath-* /root/ /etc/

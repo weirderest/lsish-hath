@@ -1,0 +1,41 @@
+#!/usr/bin/perl
+
+# A simple completed-file mover to move completed H@H
+# downloads out of the "in-progress" folder and into a 
+# "completed" folder
+
+use File::Copy;
+use strict;
+use Env qw(DEBUG);
+
+# download directory for H@H
+my $down_dir="/dl/in_progress/";
+my $dest_dir="/dl/complete/";
+
+### Enable debug output
+#my $debug="1";
+my $debug=$DEBUG;
+
+### Disable actually moving files
+#my $no_move=1;
+my $no_move=0;
+
+print "Looking in $down_dir...\n" if $debug;
+###################################
+opendir(DOWNLOAD, $down_dir) || die "Can't open $down_dir- $!\n";
+while (my $dir = readdir(DOWNLOAD)) {
+	next if ($dir =~ /^\./);
+	print "Examining dir $dir\n" if $debug;
+	my $down = "$down_dir/$dir";
+	my $dest = "$dest_dir/$dir";
+	# Skip unless it is a dir
+	next unless (-d "$down_dir/$dir");
+	# move the dir if it has galleryinfo.txt in it
+	if (-f "$down_dir/$dir/galleryinfo.txt") {
+		print "Found galleryinfo.txt in $down, moving $down to $dest\n";
+		unless ($no_move){ move($down, $dest) || die "FATAL: could not move $down to $dest- $!\n"; };
+	} else {
+		print "Didn't find galleryinfo.txt in $down\n" if $debug;
+	}
+}
+closedir(DOWNLOAD);

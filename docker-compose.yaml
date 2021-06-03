@@ -1,0 +1,21 @@
+version: "3.7"
+
+services:
+  lsish-hath:
+    image: weirderest/lsish-hath:${DOCKER_TAG:?Please set your .env per the README}
+    container_name: lsish-hath
+    hostname: lsish-hath
+    build:
+      context: ./build/
+      dockerfile: Dockerfile
+    env_file:
+      - ./.env
+    expose:
+      - 6969
+    ports:
+      - "${HATH_PORT:?Please set your .env per the README}:6969"
+    volumes:
+      - ${DIR_CONFIG:?Please set your .env per the README}:/config
+      - ${DIR_DL:?Please set your .env per the README}:/downloads
+      - ${DIR_LOG:?Please set your .env per the README}:/log
+    restart: unless-stopped

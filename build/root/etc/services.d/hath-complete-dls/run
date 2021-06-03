@@ -1,0 +1,11 @@
+#!/usr/bin/with-contenv bash
+export USER=${PUID}
+
+[[ -n "${DEBUG}" ]] && echo Starting hath-complete-dls run...
+
+s6-applyuidgid -u ${PUID} -g ${PGID} \
+  /usr/local/bin/hath-complete-dls
+
+[[ -n "${DEBUG}" ]] && echo hath-complete-dls completed, sleeping for ${HATH_COMPLETE_SLEEP} seconds
+
+sleep ${HATH_COMPLETE_SLEEP}
