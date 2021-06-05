@@ -1,21 +1,6 @@
 #!/usr/bin/with-contenv bash
 
 export USER=${PUID}
-CONF=/config/data/client_login
-chmod 755 /etc
-
-if [[ ! -f ${CONF} ]] ; then
-  echo no "${CONF} found..."
-  if [[ -n "${HATH_CLIENT_ID}" && -n "${HATH_CLIENT_KEY}" ]] ; then 
-    echo "Creating config..."
-    echo ${HATH_CLIENT_ID}-${HATH_CLIENT_KEY} > ${CONF} 
-    [[ -n "${DEBUG}" ]] && echo "HATH_CLIENT_ID=${HATH_CLIENT_ID}  HATH_CLIENT_KEY=${HATH_CLIENT_KEY}"
-  else
-    echo "Vars not set right, cannot create conf-  HATH_CLIENT_ID=${HATH_CLIENT_ID}  HATH_CLIENT_KEY=${HATH_CLIENT_KEY} "
-    exit 1
-  fi
-  sleep 5
-fi
 
 HATHCMD="s6-applyuidgid -u ${PUID} -g ${PGID} \
   /usr/bin/java -jar /hah/HentaiAtHome.jar \

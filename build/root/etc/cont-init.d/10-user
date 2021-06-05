@@ -1,8 +1,23 @@
 #!/usr/bin/with-contenv bash
 
+HATH_CONFIG_FILE=/config/data/client_login
+
 # make some dirs and fix some perms
 mkdir -p \
   /config/{cache,data,tmp,log}/ \
   /dl/{complete,in_progress}/
+
+if [[ ! -f ${HATH_CONFIG_FILE} ]] ; then
+  echo "No ${HATH_CONFIG_FILE} found..."
+  if [[ -n "${HATH_CLIENT_ID}" && -n "${HATH_CLIENT_KEY}" ]] ; then 
+    echo "Creating config..."
+    printf '%s' "${HATH_CLIENT_ID}-${HATH_CLIENT_KEY}" > ${HATH_CONFIG_FILE}
+    [[ -n "${DEBUG}" ]] && echo "HATH_CLIENT_ID=${HATH_CLIENT_ID}  HATH_CLIENT_KEY=${HATH_CLIENT_KEY}"
+  else
+    echo "Vars not set right, cannot create conf-  HATH_CLIENT_ID=${HATH_CLIENT_ID}  HATH_CLIENT_KEY=${HATH_CLIENT_KEY} "
+    exit 1
+  fi
+fi
+
 chown -R ${PUID}:${PGID} /config /dl /usr/local/bin
 chmod 755 /usr/local/bin/hath-* /root/ /etc/
